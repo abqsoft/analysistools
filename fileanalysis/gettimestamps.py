@@ -10,7 +10,7 @@ def main():
             help='The paths to search')
     args = parser.parse_args()
 
-    writer = csv.DictWriter(sys.stdout, ['path','type','ctime', 'ctime_utc', 'ctime_local', 'atime', 'atime_utc', 'atime_local', 'mtime', 'mtime_utc', 'mtime_local'])
+    writer = csv.DictWriter(sys.stdout, ['path','type','size','ctime', 'ctime_utc', 'ctime_local', 'atime', 'atime_utc', 'atime_local', 'mtime', 'mtime_utc', 'mtime_local'])
     writer.writeheader()
 
     for path in args.paths:
@@ -48,6 +48,7 @@ def get_details(path):
 
         out['path'] = path
         out['type'] = type
+        out['size'] = os.path.getsize(path)
 
         out['ctime'] = ctime
         out['ctime_utc'] = datetime.datetime.utcfromtimestamp(ctime).isoformat()
